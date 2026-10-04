@@ -1,57 +1,29 @@
-AJMAL'S CSP REVISION GAME — CLEAN EDITION V3
+AJMAL'S CSP REVISION GAME — V4 / 50-QUESTION ROUNDS
 
-UPLOAD TO GITHUB PAGES
-1. Extract this ZIP on your computer.
-2. Upload the CONTENTS of the extracted folder to your repository root.
-   index.html must be at the top level, alongside app.js and questions.js.
-   Keep the sources folder and its PDFs together.
-3. In Settings > Pages: Deploy from a branch > main > /(root) > Save.
-4. Open your Pages URL when GitHub finishes deployment.
+GETTING STARTED / GITHUB PAGES
+1. Extract this ZIP.
+2. Upload its contents to the repository root. index.html must be at the root, alongside app.js, engine.js, questions.js, style.css and the other files.
+3. Include the sources folder and all 14 PDFs. It supports the source links in the app. Do not upload the ZIP itself as the website.
+4. For an existing V3 repository, replace matching files with this version and add engine.js if missing. Keep the folder structure.
+5. In repository Settings > Pages, choose the branch containing these files and the root folder, then save.
+6. Open the HTTPS website URL. If an older version appears, reload; clear that site's browser data if needed. Clearing browser data removes saved progress.
 
-IF REPLACING THE OLD APP AT THE SAME ADDRESS
-Remove the old app files and upload this complete package. If you still see
-old content, clear this site's browser data once, close its tabs and reopen
-the Pages URL. On Android, uninstall the old shortcut/app and reinstall the
-clean edition. The clean edition shows V3.0 in the footer.
+PHONE INSTALLATION / OFFLINE
+Open the hosted HTTPS site online once. Android browsers commonly offer Install app / Add to home screen; iPhone Safari offers Share > Add to Home Screen. The app caches its shell and question data. Source PDFs are cached only after you open them online. First-time access needs internet. Local file:// preview does not enable PWA installation or offline caching.
 
-HOW TO PLAY
-Tap one choice. The correct source answer and full source explanation appear.
-Tap Next question. Skip moves on without recording a correct/incorrect answer.
-You can also use keys 1–4 to select a choice.
+PLAY
+New Random Game: exactly 50 questions. Domains 1 and 2 split 25 questions as 12/13 or 13/12. Domains 3–7 receive five each. Normal games have no adjacent questions from the same domain. Each new game randomly selects and orders questions; questions can recur in a later game.
+Select one option to lock the answer, see Correct/Incorrect, the original source explanation and domain. Tap Next; after question 50, tap Finish Game. Results show total score, percentage, wrong count and domain performance. Review Wrong Answers revisits that completed attempt without changing its score.
+Wrong Answers Only and Bookmarks use up to 50 saved questions; fewer saved questions means a shorter practice session. Answering a saved wrong question correctly removes it from the ongoing wrong-question list. Domain practice selects 50 questions from one domain.
+Home preserves an unfinished session. Resume restores it, including a locked answer. Starting another session replaces the unfinished one after confirmation. Bookmarks and wrong questions stay saved. Storage is local to this browser/device and website address. V3 continuous progress is not imported into V4 rounds.
 
-DOMAIN MIX
-Every block of 20 questions contains 5 from Domain 1, 5 from Domain 2,
-and 2 each from Domains 3–7. Consecutive questions come from different domains.
-Study material is preferred for 3 of every 4 selections within a domain while
-both source types have unseen questions. The bank is the secondary pool.
-Questions do not repeat within a domain until its available pool is exhausted.
-No formula questions or advanced calculations. A few simple math tasks remain.
+SOURCE DATABASE
+questions.json is the editable database. questions.js exposes the same object as globalThis.CSP_DATA for the static app. Both contain all 2,712 records, including held-out items; 2,219 are eligible for normal play. UI and selection/scoring logic are separate in app.js and engine.js.
+Fields include question_id/id, domain, source_file, question, options, correct_answer (source label), correct_answer_index/answer (zero-based option index), explanation, is_math, bookmark, eligible, source_status, exclusion_reason, sourcePath and PDF page. bookmark defaults to false; actual bookmarks are saved in localStorage so the database file is not modified by the browser.
+To add questions: preserve source text, choose a unique id, specify the source answer index and source label, source PDF/path/page, domain and kind (study/bank). Hold out incomplete/uncertain questions. Set eligible true only for verified complete non-math, non-duplicate items. Recalculate metadata counts. Regenerate questions.js from the entire JSON object using:
+  globalThis.CSP_DATA = <the complete questions.json object>;
+Bump the cache version in sw.js whenever data or UI files change.
 
-SOURCE ACCURACY
-The game retains the source question wording, option order, answer labels
-and explanations, with page-header, line-wrap and typesetting cleanup.
-Answers follow your PDFs; they have not been independently fact-checked.
-Each question links to its original PDF and page.
-Incomplete source questions and uncertain text are held out rather than guessed.
-See QUALITY_REPORT.html and EXCLUDED_QUESTIONS.csv for counts and exclusions.
-
-INSTALL / OFFLINE
-Use HTTPS (GitHub Pages) for PWA installation and offline support.
-Android/Chrome: use the Install app link when available, or browser menu >
-Install app / Add to home screen.
-iPhone/Safari: Share > Add to Home Screen.
-Open the app online once and allow its initial files to load. Practice then
-works offline. Source PDFs are cached after they are opened online; unopened
-PDFs require an internet connection. PDF viewing support varies by browser.
-The index.html file also opens directly on a computer for basic practice,
-but installing the PWA, source PDF viewing and offline caching work best on HTTPS.
-
-PROGRESS
-Scores and question history are saved in this browser on this device.
-Progress does not sync between devices. Reset progress clears the local history.
-
-PACKAGE FILES
-index.html, style.css, app.js, engine.js, questions.js, questions.json,
-manifest.webmanifest, sw.js, favicon.svg, three PNG icons, sources/ PDFs,
-QUALITY_REPORT.html, EXCLUDED_QUESTIONS.csv and README.txt.
-The questions.json file is a readable copy of the playable data.
+QUALITY / TEST LIMITS
+See QUALITY_REPORT.html and EXCLUDED_QUESTIONS.csv for coverage and exclusions. No external knowledge was used to supply or correct answers. Calculation/formula exclusions are conservative, including uncertain mathematical typesetting. The internal Domain 8 heading in the Domain 7 training bank is ignored.
+Automated validation passed 2,000 round selections, scoring and state tests, actual UI control tests using a DOM harness, source text checks and service-worker offline/cache harness tests. Real mobile visual layout, PWA installation and device offline behavior could not be verified because the available browser could not reach the local preview. Check those on your phone after hosting.
