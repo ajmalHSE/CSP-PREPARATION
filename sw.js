@@ -1,5 +1,5 @@
 const PREFIX='csp-ajmal-'+encodeURIComponent(new URL('./',self.location.href).pathname)+'-';
-const CACHE=PREFIX+'v4-rounds-20261004';
+const CACHE=PREFIX+'v5-coverage-20261012';
 const BASE=new URL('./',self.location.href).pathname;
 const cached=request=>caches.open(CACHE).then(cache=>cache.match(request));
 const CORE=['./','./index.html','./style.css','./app.js','./engine.js','./questions.js','./favicon.svg','./manifest.webmanifest','./icon-192.png','./icon-512.png','./icon-maskable.png','./QUALITY_REPORT.html'];
